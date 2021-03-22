@@ -47,8 +47,8 @@ export default function Group(props){
     }
 
     return (
-        <div>
-            <h1>{group}</h1>
+        <div className="messagediv">
+            <center><h1>{group}</h1>
             <div className="messageBox" ref={messageEl}>
                 {messages.map(
                     (message) => {
@@ -72,7 +72,7 @@ export default function Group(props){
             <form onSubmit={handleSubmit}>
                 <textarea onChange={handleChange}></textarea>
                 <input type="submit" value="Send"></input>
-            </form>
+                </form></center>
         </div>
     ); 
 }
