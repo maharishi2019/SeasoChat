@@ -6,7 +6,8 @@ import {
     Switch,
     Route,
     Link,
-    useHistory
+    useHistory, 
+    Redirect
 } from "react-router-dom";
 
 import Home from "./Home"; 
@@ -14,6 +15,7 @@ import Login from "./Login";
 import Group from "./Group";
 import CreateGroup from "./CreateGroup"; 
 import ExploreGroup from "./ExploreGroup"; 
+import PrivateRoute from "./PrivateRoute"; 
 
 export default class App extends Component {
     constructor(props) {
@@ -35,7 +37,7 @@ export default class App extends Component {
     logOut() {
         this.setState({ loggedIn: false });
         localStorage.setItem('loggedIn', false);
-        window.location.reload();
+        window.location.reload(); 
     }
 
     render(){
@@ -44,11 +46,36 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" render={(props) => <Home {...props} loggedIn={this.state.loggedIn} logOut={this.logOut} currentUser={this.state.user} />} />
                     <Route exact path="/login" render={(props) => <Login {...props} authenticated={this.authenticated} />} />
-                    <Route exact path="/exploregroup" render={(props) => <ExploreGroup {...props} loggedIn={this.state.loggedIn} logOut={this.logOut} currentUser={this.state.user} />} />
-                    <Route exact path="/creategroup" render={(props) => <CreateGroup {...props} loggedIn={this.state.loggedIn} logOut={this.logOut} currentUser={this.state.user} />} />
-                    <Route exact path="/:group" render={(props) => <Group {...props} loggedIn={this.state.loggedIn} currentUser={this.state.user}/>} />          
+                    <PrivateRoute
+                        exact
+                        path={'/exploregroup'}
+                        component={ExploreGroup}
+                        loggedIn={this.state.loggedIn}
+                        logOut={this.logOut}
+                        currentUser={this.state.user}
+                    />
+                    <PrivateRoute
+                        exact
+                        path={'/creategroup'}
+                        component={CreateGroup}
+                        loggedIn={this.state.loggedIn}
+                        logOut={this.logOut}
+                        currentUser={this.state.user}
+                    />
+                    <PrivateRoute
+                        exact
+                        path={'/:group'}
+                        component={Group}
+                        loggedIn={this.state.loggedIn}
+                        logOut={this.logOut}
+                        currentUser={this.state.user}
+                    />
+                        
                 </Switch>
             </Router >
         ); 
     }
 }
+//<PrivateRoute exact path="/:group" render={(props) => <Group {...props} loggedIn={this.state.loggedIn} currentUser={this.state.user}/>} />   
+//<PrivateRoute exact path="/creategroup" render={(props) => <CreateGroup {...props} loggedIn={this.state.loggedIn} logOut={this.logOut} currentUser={this.state.user} />} />
+//<PrivateRoute exact path="/exploregroup" render={(props) => <ExploreGroup {...props} loggedIn={this.state.loggedIn} logOut={this.logOut} currentUser={this.state.user} />} />

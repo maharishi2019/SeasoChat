@@ -73,7 +73,7 @@ export default class Home extends Component {
         if(this.props.loggedIn){
             return(
                 <div>
-                    <MainNavbar></MainNavbar>
+                    <MainNavbar logOut={this.props.logOut}></MainNavbar>
                     <div className="savedgroupdiv">
                         <center><h1>Saved Groups</h1></center>
                         <div className="groupdisplay">

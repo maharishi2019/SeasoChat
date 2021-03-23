@@ -12,7 +12,6 @@ export default function JoinGroup(props) {
     const [groups, setGroups] = useState([])
     const groupRef = db.collection("groups");
     const userRef = db.collection("users").doc(props.currentUser.email); 
-
     function getGroups(){
         groupRef.onSnapshot((snapshot) => {
                 var groups = []; 
@@ -37,9 +36,13 @@ export default function JoinGroup(props) {
        props.history.push("/");  
     }
 
+    function handleLogout(){
+        props.logOut(); 
+    }
+
     return (
         <div>
-            <MainNavbar></MainNavbar>
+            <MainNavbar logOut={handleLogout}></MainNavbar>
             <div className="savedgroupdiv">
                 <center><h1>Explore Groups</h1></center>
                 <center>

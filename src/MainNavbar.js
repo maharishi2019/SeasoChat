@@ -25,7 +25,7 @@ export default function MainNavbar(props){
                         <Nav.Link href="/exploregroup">Explore Groups</Nav.Link>
                         <Nav.Link href="/creategroup">Create Group</Nav.Link>
                         <div className="sidebutton">
-                            <button className="btn btn-primary" onClick={props.logOut}>Logout</button>
+                            <button className="btn btn-primary" onClick={() => props.logOut()}>Logout</button>
                         </div>
                     </Nav>
                 </Navbar.Collapse>

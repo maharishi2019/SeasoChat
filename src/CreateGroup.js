@@ -8,28 +8,32 @@ export default function CreateGroup(props){
     const [newGroupName, setNewGroupName] = useState("")
     const groupRef = db.collection("groups"); 
 
-    function handleSubmit(event){
+    async function handleSubmit(event){
         event.preventDefault(); 
-        groupRef.doc(newGroupName).set({
+        await groupRef.doc(newGroupName).set({
             name: newGroupName
         })
         
-        groupRef.doc(newGroupName).collection("messages").add({
+        await groupRef.doc(newGroupName).collection("messages").add({
             content: "The start of a new group!", 
             sentBy: "The Gods of SeasoChat", 
             time: firebase.firestore.Timestamp.now()
         })
 
-        props.history.push("/"); 
+        props.history.push("/exploregroup"); 
     }
 
     function handleChange(event){
         setNewGroupName(event.target.value); 
     }
 
+    function handleLogout() {
+        props.logOut();
+    }
+
     return(
         <div>
-            <MainNavbar></MainNavbar>
+            <MainNavbar logOut={handleLogout}></MainNavbar>
             <div className="savedgroupdiv">
                 <center>
                     <h1>Create Group</h1>
